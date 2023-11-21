@@ -18,4 +18,7 @@ then echo "ERROR 1: BAD HEADER"
 	echo "(6)Listen"
 	DATA `nc -l -p 3333 -w 0`
 	echo $DATA
-       echo IP 
+       
+
+
+
