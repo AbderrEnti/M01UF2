@@ -30,7 +30,7 @@ fi
 sleep 1
 echo "OK_HANDSHAkE" 
 echo "(8)Listen"
-	DATA=`nc -l -p 3333 -w 0`
+	DATA= `nc -l -p 3333 -w 0`
 echo "(12)Test&Store&Send"
 PREFIX= echo`$DATA | cut -d " " -f 1`
 if [ "$PREFIX" != "FILE_NAME" ]
@@ -42,7 +42,8 @@ fi
 
 FILE_NAME=`echo $DATA | cut -d " " -f 2`
 echo "(13)Listen"
-DATA= `nc -l -p 3333-w 0`
+nc -l -p 3333-w 0 > inbox/$FILE_NAME
+DATA=`cat inbox/$FILE_NAME`
 echo "(16)Store&Send"
 if [ "$DATA" == "" ]
 then 
@@ -55,3 +56,21 @@ echo $DATA > inbox/$FILE_NAME
 sleep 1 
 echo "OK_DATA" | nc $CLIENT 3333
 exit 0
+
+echo "(17)Listen"
+DATA=`nc -l -p 3333 -w 0`
+echo "(20)Test&Send"
+
+
+
+
+
+
+
+
+
+
+
+
+
+

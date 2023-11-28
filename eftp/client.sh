@@ -23,9 +23,11 @@ then echo "ERROR 1: BAD HEADER"
 	then echo "ERROR 2: BAD HANDSHAKE"
 		exit 2
 	fi
+	FILE_NAME=fary1.txt
+	FILE_MD5=`echo $FILE_NAME | md5sum | cut -d " " -f 1`
 	echo "(10) Send"
 	sleep 1
-	echo " FILE_NAME fary1.txt" | nc $SERVER 3333
+	echo " FILE_NAME $FILE_NAME" | nc $SERVER 3333
 	echo "(11)Listen"
 	DATA=`nc -l -p 3333 -w 0`
 	echo "(14)Test&Send"
@@ -37,10 +39,16 @@ then echo "ERROR 1: BAD HEADER"
 	cat imgs/fary1.txt | nc $SERRVER 3333
 	echo "(15)Listen"
 	DATA= `nc -l -p 3333 -w 0`
-	 if [ "$DATA" ! = "OK_DATA" ]
+	 if [ "$DATA" != "OK_DATA" ]
 	 then 
 		 echo "ERROR 4: BAD DATA"
 		 exit 4
 	 fi
-	echo "FIN"
-       exit 0	
+	 echo "(18)Send"
+	 FILE_MD5=`cat imgs/$FILE_NAME | md5sum | cut -d " " -f 1`
+	 echo "file_md5 $FILE_MD5" | nc $SERVER 3333
+	 echo "(19)Listen"
+	 DATA=`nc -l -p 3333 -w 0`
+
+echo "FIN"
+ exit 0
